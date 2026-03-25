@@ -4,10 +4,10 @@
 
 terraform {
   cloud {
-    organization = "meiko_Org"
+    organization = ""
 
     workspaces {
-      name = "kait-terraform"
+      name = ""
     }
   }
 
