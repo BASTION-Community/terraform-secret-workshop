@@ -8,5 +8,6 @@
 variable "api_key" {
   description = "External API key"
   type        = string
+  nullable  = false
   sensitive   = true
 }
