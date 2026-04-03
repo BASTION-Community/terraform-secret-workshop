@@ -133,6 +133,4 @@ terraform destroy -auto-approve
 | **버전 관리 불가** | .gitignore로 제외했으므로 시크릿 변경 이력 추적 불가 |
 | **환경별 관리** | dev/stg/prod별 tfvars 파일을 각각 관리해야 함 |
 
-> **핵심 메시지**: `.gitignore`는 Git에서 숨기는 것이지, 시크릿을 보호하는 것이 아니다.
-
 → 다음: [Case 2: TFC variable + sensitive](../case2-tfc-variable/README.md)
