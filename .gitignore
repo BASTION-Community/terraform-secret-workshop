@@ -7,7 +7,7 @@ crash.log
 crash.*.log
 
 # User-local SOPS config
-case3-sops/.sops.yaml
+case3-sops/secrets/.sops.yaml
 
 # SOPS 복호화된 임시 파일
 **/*.dec.yaml

@@ -18,8 +18,46 @@
 - jq (State JSON 파싱용)
 - `main.tf`의 `organization`, `workspace`를 본인 HCP Terraform 값으로 미리 수정
 
+### 워크숍 공통 준비
+
+> 아래 절차는 **워크숍을 빠르게 진행하기 위한 단순화된 준비 예시**다.  
+> 운영 환경에서는 IAM user + 장기 access key 대신 role과 OIDC/Dynamic Credentials를 권장한다.
+
+#### 1. 로컬 AWS CLI profile 준비
+
+1. IAM user를 생성하고 access key를 만든다.
+2. 워크숍 단순화를 위해 필요한 권한을 부여한다.
+3. 로컬 profile을 설정한다.
+
+```bash
+aws configure --profile secret-hands-on
+```
+
+4. 실습 세션에서 해당 profile을 사용한다.
+
+```bash
+export AWS_PROFILE=secret-hands-on
+```
+
+5. 현재 자격증명이 정상인지 확인한다.
+
+```bash
+aws sts get-caller-identity
+```
+
+#### 2. HCP Terraform workspace 준비
+
+1. workspace를 생성한다.
+2. 워크숍 기준으로는 VCS 연결 없이 **CLI-driven 방식**으로 진행해도 충분하다.
+3. workspace 변수에 아래를 **Environment variables**로 등록한다.
+
+```text
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+```
+
 > HCP Terraform remote run을 쓴다면 workspace에 AWS 인증도 설정되어 있어야 한다.
-> 핸즈온 진행은 workspace의 **Environment variables**에 `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_SESSION_TOKEN`(필요 시)을 넣는 것이다.
+> 핸즈온 진행은 workspace의 **Environment variables**에 `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`를 넣는 것이다.
 > `TFC_AWS_PROVIDER_AUTH`, `TFC_AWS_RUN_ROLE_ARN`은 OIDC/Dynamic Credentials를 쓸 때만 쓰며, 반드시 **Terraform variable이 아니라 Environment variable**이어야 한다.
 > undeclared variable 경고와 `credential type web_identity_token_file requires role_arn` 오류가 보이면 이 설정을 먼저 확인한다.
 

@@ -32,6 +32,44 @@ flowchart LR
 | Terraform CLI | 필수 | >= 1.11 (ephemeral 지원) |
 | SOPS CLI | Case 3 | `brew install sops` |
 
+### 워크숍 공통 준비
+
+> 아래 절차는 **워크숍을 단순하게 진행하기 위한 준비 예시**다.  
+> 운영 환경에서는 최소 권한 역할과 OIDC/Dynamic Credentials 구성을 권장한다.
+
+#### 로컬 AWS CLI 준비
+
+1. IAM user를 생성하고, 워크숍 단순화를 위해 필요한 권한을 부여한다.
+2. 해당 IAM user의 access key를 생성한다.
+3. 로컬에서 profile을 설정한다.
+
+```bash
+aws configure --profile secret-hands-on
+```
+
+4. 실습 세션에서 사용할 profile을 지정한다.
+
+```bash
+export AWS_PROFILE=secret-hands-on
+```
+
+5. 현재 자격증명이 정상인지 확인한다.
+
+```bash
+aws sts get-caller-identity
+```
+
+#### HCP Terraform workspace 준비
+
+1. 각 Case별 workspace를 생성한다.
+2. 워크숍 기준으로는 VCS 연결 없이 **CLI-driven 방식**으로 써도 충분하다.
+3. workspace 변수에 아래 값을 **Environment variables**로 등록한다.
+
+```text
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+```
+
 ### TFC Workspace 준비
 
 | Workspace | Case | Working Directory |
@@ -46,7 +84,7 @@ flowchart LR
 
 Remote run을 사용할 경우, workspace에 **AWS 인증 정보가 미리 설정되어 있어야 한다**.
 
-- **핸즈온 기본 세팅**: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_SESSION_TOKEN`(필요 시)을 **Environment variables**로 등록
+- **핸즈온 기본 세팅**: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`를 **Environment variables**로 등록
 - **선택 사항**: HCP Terraform Dynamic Provider Credentials를 쓸 경우 `TFC_AWS_PROVIDER_AUTH`, `TFC_AWS_RUN_ROLE_ARN`을 **Environment variables**로 등록
 
 `TFC_AWS_PROVIDER_AUTH`, `TFC_AWS_RUN_ROLE_ARN`을 **Terraform variables**로 등록하면 remote run 로그에 undeclared variable 경고가 뜨고, AWS provider에서 아래와 같은 오류가 날 수 있다.
