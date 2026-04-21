@@ -42,6 +42,21 @@ flowchart LR
 
 `main.tf`에는 `YOUR_ORG`, `YOUR_WORKSPACE` placeholder가 들어 있으므로 각 Case에서 본인 값으로 바꿔서 사용한다.
 
+### HCP Terraform AWS 인증
+
+Remote run을 사용할 경우, workspace에 **AWS 인증 정보가 미리 설정되어 있어야 한다**.
+
+- **워크숍 기본 경로**: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_SESSION_TOKEN`(필요 시)을 **Environment variables**로 등록
+- **선택 사항**: HCP Terraform Dynamic Provider Credentials를 쓸 경우 `TFC_AWS_PROVIDER_AUTH`, `TFC_AWS_RUN_ROLE_ARN`을 **Environment variables**로 등록
+
+`TFC_AWS_PROVIDER_AUTH`, `TFC_AWS_RUN_ROLE_ARN`을 **Terraform variables**로 등록하면 remote run 로그에 undeclared variable 경고가 뜨고, AWS provider에서 아래와 같은 오류가 날 수 있다.
+
+```text
+Error: credential type web_identity_token_file requires role_arn
+```
+
+즉, 워크숍 참가자는 **OIDC 설정 없이 access key 방식으로 진행해도 충분**하고, 발표자나 운영 환경에서만 필요하면 Dynamic Credentials를 사용하면 된다.
+
 ## 디렉토리 구조
 
 ```
