@@ -8,33 +8,7 @@
 
 ## 아키텍처
 
-```mermaid
-flowchart TD
-    subgraph tfc ["Terraform Cloud"]
-        workspace["TFC Workspace Variables"]
-        var_sens["api_key = ••••••• (sensitive)"]
-        state_tfc["TFC State Backend (암호화 저장)"]
-    end
-
-    subgraph terraform ["Terraform 실행 (TFC Runner)"]
-        plan["terraform plan — value = (sensitive value)"]
-        apply["terraform apply"]
-    end
-
-    subgraph aws ["AWS"]
-        ssm["SSM SecureString"]
-    end
-
-    subgraph risk ["하지만..."]
-        state_pull["terraform state pull → 평문 노출"]
-        saas["SaaS 의존성: TFC 장애 시 apply 불가"]
-        cost["2026-04: user → resource 과금"]
-    end
-
-    workspace --> plan --> apply --> ssm
-    apply --> state_tfc
-    state_tfc -.->|"API 권한 있으면"| state_pull
-```
+![img.png](images/img.png)
 
 ## Case 1과의 차이점
 
@@ -54,6 +28,9 @@ flowchart TD
 - TFC workspace variable에 `api_key` 등록 (sensitive 체크)
 - jq
 
+> 워크숍 기본 방식은 workspace의 **Environment variables**에 `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_SESSION_TOKEN`(필요 시)을 넣는 것이다.
+> OIDC/Dynamic Credentials를 쓸 경우에만 `TFC_AWS_PROVIDER_AUTH`, `TFC_AWS_RUN_ROLE_ARN`을 **Environment variable**로 설정한다.
+
 ## 실습 절차
 
 ### Step 1: 코드 확인
@@ -72,7 +49,7 @@ cat ssm.tf
 
 TFC UI에서:
 1. Workspace `secret-workshop-case2` → Variables
-2. Add variable: `api_key` = `sk-demo-a1b2c3d4e5f6` (Sensitive 체크)
+2. Add variable: `api_key` = `test1234` (Sensitive 체크)
 
 ### Step 3: terraform init + apply
 
@@ -87,9 +64,13 @@ terraform apply -auto-approve
 ### Step 4: SSM 확인 (정상 주입)
 
 ```bash
+# aws console 에서 확인
+
+
+# 또는 aws cli 사용
 aws ssm get-parameter --name "/demo/api-key" --with-decryption \
   --query "Parameter.Value" --output text
-# → sk-demo-a1b2c3d4e5f6 (정상)
+# → "test1234" (정상)
 ```
 
 ### Step 5: State 검증 (평문 노출 여부)
@@ -101,10 +82,10 @@ terraform state show 'aws_ssm_parameter.api_key'
 
 # state pull — 평문 노출!
 terraform state pull | jq '.resources[] | select(.type=="aws_ssm_parameter") | .instances[].attributes | {name, value}'
-# → { "name": "/demo/api-key", "value": "sk-demo-a1b2c3d4e5f6" }
+# → { "name": "/demo/api-key", "value": "test1234" }
 ```
 
-**"아하 모먼트"**: `sensitive = true`는 화면에서 가리는 것이지, State에서 보호하는 것이 아니다!
+**"기억할 점"**: `sensitive = true`는 화면에서 가리는 것이지, State에서 보호하는 것이 아니다!
 
 ### Step 6: 정리
 
@@ -114,13 +95,13 @@ terraform destroy -auto-approve
 
 ## 검증 결과
 
-| 확인 항목 | 결과 |
-|----------|------|
-| 로컬 파일 | 없음 (TFC에 저장) |
+| 확인 항목 | 결과                                |
+|----------|-----------------------------------|
+| 로컬 파일 | 없음 (TFC에 저장)                      |
 | terraform plan | `value = (sensitive value)` — 가려짐 |
 | terraform state show | `value = (sensitive value)` — 가려짐 |
-| terraform state pull | **평문 노출** — `"sk-demo-a1b2c3d4e5f6"` |
-| AWS SSM | SecureString으로 정상 저장 |
+| terraform state pull | **평문 노출** — `"test1234"`          |
+| AWS SSM | SecureString으로 정상 저장              |
 
 ## 이 방식의 한계
 
