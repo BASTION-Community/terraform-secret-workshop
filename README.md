@@ -30,7 +30,7 @@ flowchart LR
 | AWS 계정 | 필수 | SSM Parameter Store, KMS 접근 |
 | TFC 계정 | 필수 | workspace 필요 |
 | Terraform CLI | 필수 | >= 1.11 (ephemeral 지원) |
-| SOPS CLI | Case 3 | `brew install sops` |
+| SOPS CLI | Case 3 | macOS는 `brew install sops`, Windows는 공식 릴리스 바이너리 설치 후 `sops --version` 확인 |
 
 ### 워크숍 공통 준비
 

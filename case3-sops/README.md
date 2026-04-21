@@ -25,7 +25,9 @@
 - AWS 계정 + 자격증명 (KMS, SSM 권한)
 - Terraform CLI >= **1.11** (ephemeral 리소스 지원)
 - TFC 계정 + workspace
-- SOPS CLI (`brew install sops`)
+- SOPS CLI
+  - macOS: `brew install sops`
+  - Windows: 공식 릴리스에서 Windows 바이너리를 설치하고 `sops --version`으로 확인
 - jq
 - 로컬 `AWS_PROFILE` 또는 기본 자격증명으로 KMS `Encrypt`가 가능해야 함
 
