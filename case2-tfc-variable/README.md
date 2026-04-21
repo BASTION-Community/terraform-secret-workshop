@@ -1,12 +1,12 @@
 # Case 2: TFC workspace variable + sensitive
 
-## 학습 목표
+## 실습 목표
 
 - `sensitive = true` 변수와 TFC workspace variable로 시크릿을 관리하는 패턴을 이해한다
 - `sensitive = true`가 **CLI 출력만 가리고, State에는 평문이 저장**되는 것을 검증한다
 - TFC의 SaaS 의존성과 2026-04 과금 모델 변경을 이해한다
 
-## 아키텍처
+## case2 의 흐름
 
 ![img.png](images/img.png)
 
@@ -28,7 +28,7 @@
 - TFC workspace variable에 `api_key` 등록 (sensitive 체크)
 - jq
 
-> 워크숍 기본 방식은 workspace의 **Environment variables**에 `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_SESSION_TOKEN`(필요 시)을 넣는 것이다.
+> 핸즈온 진행 방식은 workspace의 **Environment variables**에 `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_SESSION_TOKEN`(필요 시)을 넣는 것이다.
 > OIDC/Dynamic Credentials를 쓸 경우에만 `TFC_AWS_PROVIDER_AUTH`, `TFC_AWS_RUN_ROLE_ARN`을 **Environment variable**로 설정한다.
 
 ## 실습 절차

@@ -1,6 +1,6 @@
 # Case 1: terraform.tfvars + .gitignore
 
-## 학습 목표
+## 실습 목표
 
 - `terraform.tfvars`로 시크릿을 관리하는 기본 패턴을 이해한다
 - `.gitignore`로 Git 추적을 제외해도 **시크릿이 보호되지 않는 이유**를 확인한다
@@ -19,7 +19,7 @@
 - `main.tf`의 `organization`, `workspace`를 본인 HCP Terraform 값으로 미리 수정
 
 > HCP Terraform remote run을 쓴다면 workspace에 AWS 인증도 설정되어 있어야 한다.
-> 워크숍 기본 방식은 workspace의 **Environment variables**에 `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_SESSION_TOKEN`(필요 시)을 넣는 것이다.
+> 핸즈온 진행은 workspace의 **Environment variables**에 `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_SESSION_TOKEN`(필요 시)을 넣는 것이다.
 > `TFC_AWS_PROVIDER_AUTH`, `TFC_AWS_RUN_ROLE_ARN`은 OIDC/Dynamic Credentials를 쓸 때만 쓰며, 반드시 **Terraform variable이 아니라 Environment variable**이어야 한다.
 > undeclared variable 경고와 `credential type web_identity_token_file requires role_arn` 오류가 보이면 이 설정을 먼저 확인한다.
 

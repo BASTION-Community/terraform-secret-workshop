@@ -55,6 +55,9 @@ flowchart TD
 - SOPS CLI (`brew install sops`)
 - jq
 
+> 핸즈온 진행은 workspace의 **Environment variables**에 `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_SESSION_TOKEN`(필요 시)을 넣는 것이다.
+> 발표자나 운영 환경에서만 필요하면 OIDC/Dynamic Credentials를 사용해도 되며, 이 경우 `TFC_AWS_PROVIDER_AUTH`, `TFC_AWS_RUN_ROLE_ARN`은 **Environment variable**이어야 한다.
+
 ## 실습 절차
 
 ### Step 1: KMS Key 생성 (1st apply)
