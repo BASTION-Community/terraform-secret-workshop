@@ -3,7 +3,6 @@
 *.tfstate
 *.tfstate.*
 *.tfplan
-.terraform.lock.hcl
 
 # 시크릿 파일 — Git 추적 제외
 # .gitignore는 Git에서 숨기는 것이지, 시크릿을 보호하는 것이 아니다

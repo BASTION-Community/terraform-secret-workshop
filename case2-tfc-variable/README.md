@@ -77,7 +77,7 @@ TFC UI에서:
 ### Step 3: terraform init + apply
 
 ```bash
-# main.tf의 organization을 본인 TFC org로 수정 후
+# main.tf의 organization, workspace를 본인 TFC 값으로 수정 후
 terraform init
 terraform plan
 # → "value = (sensitive value)" — 겉으로는 가려져 보인다

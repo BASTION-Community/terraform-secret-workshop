@@ -17,10 +17,10 @@ ephemeral "sops_file" "demo" {
 resource "aws_ssm_parameter" "demo" {
   for_each = local.versions
 
-  name             = each.key                                         # SSM path (예: /demo/db/password)
+  name             = each.key # SSM path (예: /demo/db/password)
   type             = "SecureString"
-  value_wo         = ephemeral.sops_file.demo.data[each.key]          # 메모리의 평문 → SSM에 전달
-  value_wo_version = each.value                                       # 값 변경 시 이 숫자를 bump
+  value_wo         = ephemeral.sops_file.demo.data[each.key] # 메모리의 평문 → SSM에 전달
+  value_wo_version = each.value                              # 값 변경 시 이 숫자를 bump
 
   tags = {
     managed_by = "sops"

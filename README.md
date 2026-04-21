@@ -20,7 +20,8 @@ flowchart LR
 | [Case 2](case2-tfc-variable/) | TFC variable + sensitive | api-key × 1 | **평문** | sensitive는 화면에서 가리는 것이지, State에서 보호하는 것이 아니다 |
 | [Case 3](case3-sops/) | SOPS + ephemeral + value_wo | api-key × 3 | **빈 문자열** | 시크릿이 흐르는 전 구간에서 평문이 사라졌다 |
 
-모든 Case는 **TFC backend**를 사용
+모든 Case는 **TFC backend**를 사용한다.
+실습 재현성을 위해 **Case별로 별도 workspace 하나씩** 만드는 구성을 권장한다.
 
 ## 사전 준비
 
@@ -33,11 +34,13 @@ flowchart LR
 
 ### TFC Workspace 준비
 
-| Workspace         | Case | Working Directory |
-|-------------------|------|-------------------|
-| `secret-workshop` | Case 1 | `case1-tfvars` |
-| `secret-workshop` | Case 2 | `case2-tfc-variable` |
-| `secret-workshop` | Case 3 | `case3-sops` |
+| Workspace | Case | Working Directory |
+|-----------|------|-------------------|
+| `secret-workshop-case1` | Case 1 | `case1-tfvars` |
+| `secret-workshop-case2` | Case 2 | `case2-tfc-variable` |
+| `secret-workshop-case3` | Case 3 | `case3-sops` |
+
+`main.tf`에는 `YOUR_ORG`, `YOUR_WORKSPACE` placeholder가 들어 있으므로 각 Case에서 본인 값으로 바꿔서 사용한다.
 
 ## 디렉토리 구조
 

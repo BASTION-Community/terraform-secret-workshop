@@ -7,7 +7,7 @@ terraform {
     organization = "YOUR_ORG"
 
     workspaces {
-      name = "secret-workshop-case2"
+      name = "YOUR_WORKSPACE"
     }
   }
 

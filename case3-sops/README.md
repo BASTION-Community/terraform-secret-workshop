@@ -62,7 +62,7 @@ flowchart TD
 ```bash
 cd case3-sops
 
-# main.tf의 organization을 본인 TFC org로 수정 후
+# main.tf의 organization, workspace를 본인 TFC 값으로 수정 후
 terraform init
 
 # KMS Key만 먼저 생성
@@ -76,13 +76,14 @@ terraform output kms_key_arn
 ### Step 2: SOPS 파일 생성
 
 ```bash
-# .sops.yaml 생성 — 프로젝트 루트(case3-sops/)에 위치해야 함
-# ⚠️ secrets/ 안에 넣으면 case3-sops/에서 sops 명령 실행 시 찾지 못함
-cat > .sops.yaml <<EOF
-creation_rules:
-  - path_regex: secrets/.*\.yaml$
-    kms: "$(terraform output -raw kms_key_arn)"
-EOF
+# .sops.yaml은 sops가 자동 생성하지 않는다.
+# 프로젝트 루트(case3-sops/)에 템플릿을 복사해 직접 만든다.
+# ⚠️ secrets/ 안에 두면 case3-sops/에서 sops 명령 실행 시 찾지 못할 수 있다.
+cp .sops.yaml.example .sops.yaml
+
+# terraform output -raw kms_key_arn 결과를 .sops.yaml의 kms 값에 붙여넣는다
+# 예: kms: "arn:aws:kms:ap-northeast-2:123456789012:key/abcd-1234-..."
+vi .sops.yaml
 
 # 평문 예시를 복사하여 실제 SOPS 파일 생성
 cp secrets/demo.yaml.example secrets/demo.yaml
