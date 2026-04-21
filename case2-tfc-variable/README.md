@@ -28,7 +28,7 @@
 - TFC workspace variable에 `api_key` 등록 (sensitive 체크)
 - jq
 
-> 핸즈온 진행 방식은 workspace의 **Environment variables**에 `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_SESSION_TOKEN`(필요 시)을 넣는 것이다.
+> 핸즈온 진행 방식은 workspace의 **Environment variables**에 `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`을 넣는 것이다.
 > OIDC/Dynamic Credentials를 쓸 경우에만 `TFC_AWS_PROVIDER_AUTH`, `TFC_AWS_RUN_ROLE_ARN`을 **Environment variable**로 설정한다.
 
 ## 실습 절차
