@@ -18,10 +18,9 @@ flowchart LR
 |------|------|----------|-----------|-----------|
 | [Case 1](case1-tfvars/) | terraform.tfvars + .gitignore | api-key × 1 | **평문** | .gitignore는 Git에서 숨기는 것이지, 시크릿을 보호하는 것이 아니다 |
 | [Case 2](case2-tfc-variable/) | TFC variable + sensitive | api-key × 1 | **평문** | sensitive는 화면에서 가리는 것이지, State에서 보호하는 것이 아니다 |
-| [Case 3](case3-sops/) | SOPS + ephemeral + value_wo | api-key × 3 | **빈 문자열** | 시크릿이 흐르는 전 구간에서 평문이 사라졌다 |
+| [Case 3](case3-sops/) | SOPS + ephemeral + value_wo | api-key × 3 | **빈 문자열** | 시크릿이 전 구간에서 평문이 사라졌다 |
 
 모든 Case는 **TFC backend**를 사용한다.
-실습 재현성을 위해 **Case별로 별도 workspace 하나씩** 만드는 구성을 권장한다.
 
 ## 사전 준비
 

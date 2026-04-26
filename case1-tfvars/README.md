@@ -134,7 +134,7 @@ terraform state pull | jq '.resources[] | select(.type=="aws_ssm_parameter") | .
 
 #### `state show` vs `state pull` — 왜 결과가 다른가?
 
-제1원칙으로 쪼개면 확인할 질문은 4개뿐이다.
+확인할 질문은 4개뿐이다.
 
 - ① Terraform은 이 값을 state에 저장하는가
 - ② AWS provider는 이 값을 CLI에서 민감값으로 다루는가
