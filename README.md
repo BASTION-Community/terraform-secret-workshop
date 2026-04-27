@@ -42,6 +42,7 @@ brew install awscli
 aws --version    # 2.x 이상 확인
 
 # Terraform
+brew tap hashicorp/tap
 brew install hashicorp/tap/terraform
 terraform -v     # >= 1.11 확인
 
@@ -52,11 +53,11 @@ sops -v
 
 #### Windows
 
-| 도구 | 설치 방법 |
-|------|----------|
-| AWS CLI | [공식 MSI 설치파일](https://aws.amazon.com/cli/) 다운로드 후 실행 |
-| Terraform | [공식 릴리스](https://releases.hashicorp.com/terraform/) zip 다운로드 → PATH에 추가 |
-| SOPS | [GitHub Releases](https://github.com/getsops/sops/releases) `.exe` 다운로드 → PATH에 추가 |
+| 도구 | 설치 방법                                                                                 |
+|------|---------------------------------------------------------------------------------------|
+| AWS CLI | [공식 문서](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) 다운로드 |
+| Terraform | [공식 릴리스](https://developer.hashicorp.com/terraform/install) 다운로드                      |
+| SOPS | [GitHub Releases](https://passwd.tistory.com/entry/SOPSSecrets-OPerationS%EB%9E%80) 다운로드 |
 
 설치 후 버전 확인:
 
