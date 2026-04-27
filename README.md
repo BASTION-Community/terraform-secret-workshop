@@ -29,7 +29,42 @@ flowchart LR
 | AWS 계정 | 필수 | SSM Parameter Store, KMS 접근 |
 | TFC 계정 | 필수 | workspace 필요 |
 | Terraform CLI | 필수 | >= 1.11 (ephemeral 지원) |
-| SOPS CLI | Case 3 | macOS는 `brew install sops`, Windows는 공식 릴리스 바이너리 설치 후 `sops --version` 확인 |
+| AWS CLI | 필수 | >= 2.x |
+| SOPS CLI | Case 3 | Case 3 핸즈온 시작 전 설치 |
+
+### 도구 설치
+
+#### macOS (Homebrew)
+
+```bash
+# AWS CLI
+brew install awscli
+aws --version    # 2.x 이상 확인
+
+# Terraform
+brew install hashicorp/tap/terraform
+terraform -v     # >= 1.11 확인
+
+# SOPS (Case 3에서 사용, 나중에 설치해도 됨)
+brew install sops
+sops -v
+```
+
+#### Windows
+
+| 도구 | 설치 방법 |
+|------|----------|
+| AWS CLI | [공식 MSI 설치파일](https://aws.amazon.com/cli/) 다운로드 후 실행 |
+| Terraform | [공식 릴리스](https://releases.hashicorp.com/terraform/) zip 다운로드 → PATH에 추가 |
+| SOPS | [GitHub Releases](https://github.com/getsops/sops/releases) `.exe` 다운로드 → PATH에 추가 |
+
+설치 후 버전 확인:
+
+```bash
+aws --version        # 2.x 이상
+terraform -v         # >= 1.11
+sops -v              # 설치 확인
+```
 
 ### 워크숍 공통 준비
 
